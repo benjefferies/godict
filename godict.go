@@ -1,21 +1,22 @@
 package main
 
 import (
-	"github.com/bachvtuan/wordnik"
-	"os"
 	"fmt"
+	"os"
 	"strings"
+
+	"github.com/bachvtuan/wordnik"
 )
 
 var (
-	api_key = "a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5"
-	usage = `godict is a command line dictionary
+	api_key = "ee837f2dc0aea23d780090390550c38b08c054a9df2b82f13"
+	usage   = `godict is a command line dictionary
 
 	Usage: godict [word]
 `
 )
 
-func service() *wordnik.Service  {
+func service() *wordnik.Service {
 	service, err := wordnik.New(api_key)
 	if err != nil {
 		panic(fmt.Sprintf("Failed to initialise wordnik: %v", err))
@@ -55,7 +56,7 @@ func main() {
 
 	definitions := lookupWord(word)
 
-	if (len(definitions) == 0) {
+	if len(definitions) == 0 {
 		println(fmt.Sprintf("Did you spell '%s' correctly?", word))
 		os.Exit(1)
 	}

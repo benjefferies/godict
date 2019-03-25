@@ -1,5 +1,15 @@
-FROM golang:1.6-onbuild
+FROM golang as builder
 
-RUN export PATH=$PATH:/usr/
+COPY godict.go /go/src/github.com/benjefferies/godict/godict.go
+WORKDIR /go/src/github.com/benjefferies/godict
 
-ENTRYPOINT ["app"]
+ENV CGO_ENABLED=0
+
+RUN go get -v ./...
+RUN go build -o godict -v ./...
+
+FROM alpine
+
+COPY --from=builder /go/src/github.com/benjefferies/godict/godict /usr/local/bin/godict
+
+ENTRYPOINT ["/usr/local/bin/godict"]
